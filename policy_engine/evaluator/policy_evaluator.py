@@ -1,3 +1,5 @@
+from audit.audit_logger import AuditLogger
+
 import json
 from pathlib import Path
 
@@ -5,6 +7,7 @@ from pathlib import Path
 class PolicyEvaluator:
     def __init__(self, policy_file_path):
         self.policies = self._load_policies(policy_file_path)
+         self.audit_logger = AuditLogger()
 
     def _load_policies(self, path):
         with open(path, "r") as file:
@@ -39,6 +42,8 @@ class PolicyEvaluator:
             "reason": selected_policy["description"],
             "policy_id": selected_policy["policy_id"]
         }
+        self.audit_logger.log_decision(context, result)
+return result
 
     def _check_condition(self, condition, context):
         for key, value in condition.items():
