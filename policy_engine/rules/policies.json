@@ -1,0 +1,21 @@
+[
+  {
+    "policy_id": "POL-001",
+    "description": "Block high CPU usage for non-admin users",
+    "condition": {
+      "cpu_usage_gt": 80,
+      "user_role_not": "admin"
+    },
+    "action": "DENY",
+    "priority": 1
+  },
+  {
+    "policy_id": "POL-002",
+    "description": "Allow admin users",
+    "condition": {
+      "user_role_is": "admin"
+    },
+    "action": "ALLOW",
+    "priority": 2
+  }
+]
