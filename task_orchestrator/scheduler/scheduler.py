@@ -1,3 +1,4 @@
+from failure_handling.failure_manager import FailureManager
 import random
 from state_machine.task import Task
 from state_machine.states import TaskState
@@ -6,7 +7,8 @@ from state_machine.states import TaskState
 class TaskScheduler:
     def __init__(self):
         self.tasks = []
-
+        self.failure_manager = FailureManager()
+        
     def add_task(self, task: Task):
         self.tasks.append(task)
 
@@ -28,5 +30,6 @@ class TaskScheduler:
             task.mark_failed()
             print(
                 f"Task {task.task_id} failed. "
+                f"State: {task.state.value}, Retries: {task.retry_count}"
                 f"State: {task.state.value}, Retries: {task.retry_count}"
             )
